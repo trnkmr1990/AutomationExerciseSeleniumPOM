@@ -26,10 +26,10 @@ pipeline {
         }
         stage('Run Selenium TestNG Suite') {
             steps {
-               if(TEST_GROUP == 'all'){
+               if(params.TEST_GROUP == 'all'){
                     bat 'mvn test'
                } else {
-                    bat "mvn test -Dgroups=${TEST_GROUP}"
+                    bat "mvn test -Dgroups=${params.TEST_GROUP}"
 			   }
             }
         }
