@@ -1,33 +1,36 @@
 pipeline {
     agent any
 
+	parameters {
+        choice(name: 'TEST_GROUP', choices: ['login', 'products', 'smoke', 'all'],
+           description: 'Which TestNG group to run'
+    }
     tools {
         // Names must match Global Tool Configuration in Jenkins
         jdk 'JDK-21'
         maven 'Maven-3.9'
     }
-
     environment {
         MAVEN_OPTS = '-Xmx1024m'
     }
-
     stages {
-
         stage('Checkout Code') {
             steps {
                 checkout scm
             }
         }
-
         stage('Clean & Compile') {
             steps {
                 bat 'mvn clean compile'
             }
         }
-
         stage('Run Selenium TestNG Suite') {
             steps {
-                bat 'mvn clean test'
+               if(TEST_GROUP == 'all'){
+                    bat 'mvn test'
+               } else {
+                    bat "mvn test -Dgroups=${TEST_GROUP}"
+			   }
             }
         }
     }

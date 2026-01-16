@@ -93,6 +93,8 @@
     <systemPropertyVariables>
       <allure.results.directory>${project.basedir}/allure-results</allure.results.directory>
     </systemPropertyVariables>
+    <!-- This is the key -->
+    <groups>${groups}</groups>
   </configuration>
 </plugin>
 
