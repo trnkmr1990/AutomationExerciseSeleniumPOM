@@ -2,8 +2,11 @@ pipeline {
     agent any
 
 	parameters {
-        choice(name: 'TEST_GROUP', choices: ['login', 'products', 'smoke', 'all'],
-           description: 'Which TestNG group to run')
+        choice(
+            name: 'TEST_GROUP',
+            choices: ['login', 'products', 'all'],
+            description: 'Select which TestNG group to run'
+        )
     }
     tools {
         // Names must match Global Tool Configuration in Jenkins
@@ -26,11 +29,14 @@ pipeline {
         }
         stage('Run Selenium TestNG Suite') {
             steps {
-               if(params.TEST_GROUP == 'all'){
-                    bat 'mvn test'
-               } else {
-                    bat "mvn test -Dgroups=${params.TEST_GROUP}"
-			   }
+				script {
+					if (params.TEST_GROUP == 'all'){
+						bat 'mvn test'
+               		} else {
+                    	bat "mvn test -Dgroups=${params.TEST_GROUP}"
+			   		}
+
+				}
             }
         }
     }
