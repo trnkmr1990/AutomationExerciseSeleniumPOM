@@ -3,7 +3,7 @@ pipeline {
 
 	parameters {
         choice(name: 'TEST_GROUP', choices: ['login', 'products', 'smoke', 'all'],
-           description: 'Which TestNG group to run'
+           description: 'Which TestNG group to run')
     }
     tools {
         // Names must match Global Tool Configuration in Jenkins
